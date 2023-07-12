@@ -1,0 +1,42 @@
+{
+  "name": "blockchain-helper",
+  "version": "1.0.0",
+  "description": "Assistant for work",
+  "main": "./ts_build/index",
+  "author": "Terlibin Oleg",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn build && node ts_build/index.js",
+    "build": "npm run tsc",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "bip65": "^1.0.3",
+    "bitcoinjs-lib": "^5.1.10",
+    "@ducatus/bitcore-lib": "^8.16.3",
+    "@ducatus/bitcore-p2p": "8.9.1",
+    "@types/bitcore-lib": "^0.15.3",
+    "@types/node": "^16.9.1",
+    "@types/readline-sync": "^1.4.4",
+    "axios": "^1.2.3",
+    "bitcore-lib": "^8.25.10",
+    "bitcore-lib-cash": "^8.25.10",
+    "bitcore-lib-doge": "^8.25.10",
+    "bitcore-lib-ltc": "^8.25.14",
+    "bitcore-mnemonic": "^8.25.10",
+    "bitcore-p2p": "8.25.12",
+    "bitcore-p2p-cash": "8.25.10",
+    "bitcore-p2p-doge": "8.25.10",
+    "ethers": "^5.4.7",
+    "readline-sync": "^1.4.10",
+    "request-promise-native": "^1.0.9",
+    "ripple-binary-codec": "^1.1.3",
+    "ripple-keypairs": "^1.0.3",
+    "ripple-lib": "^1.10.0",
+    "typescript": "^4.4.2",
+    "web3": "^1.5.2"
+  },
+  "devDependencies": {
+    "prettier": "2.8.3"
+  }
+}
