@@ -5,7 +5,7 @@ import Balance from "./balance";
 import Send from "./send";
 import Token from "./token";
 
-export default abstract class Ethereum extends Menu {
+export default class Ethereum extends Menu {
   constructor() {
     const menuList: IMenu[] = [
       {
