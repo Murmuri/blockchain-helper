@@ -1,9 +1,11 @@
 import Messages from "../../controllers/messages";
 import Web3 from "web3";
+import { table } from "table";
 
 export default class Token {
-  public init() {
+  public initialize(back: any) {
     this.getBalanceForAddress();
+    back();
   }
 
   public async getBalanceForAddress() {
@@ -31,7 +33,9 @@ export default class Token {
       const result = await contract.methods.balanceOf(walletAddress).call();
       const format = web3.utils.fromWei(result);
 
-      Messages.answer("Balance: " + format);
+      const data = [["Balance", format]];
+
+      Messages.answer(table(data));
     }
 
     getBalance();

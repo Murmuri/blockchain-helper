@@ -1,26 +1,28 @@
 import Messages from "../../controllers/messages";
-import Chains from '../../controllers/chains';
-import Networks from '../../controllers/networks';
+import Chains from "../../controllers/chains";
+import Networks from "../../controllers/networks";
 import Web3 from "web3";
+import select from "@inquirer/select";
 
 export default class Check {
-  public init() {
-    this.checkPeer();
+  public initialize(back: any) {
+    this.checkPeer(back);
+    back();
   }
 
-  public async checkPeer() {
-    const chain = this.getChainModule();
-    const network: string = this.getNetwork();
-    const host = Messages.getString('Input host: ');
-    const port = Messages.getString('Input port: ');
-    const {evm, peer} = chain;
+  public async checkPeer(back: any) {
+    const chain = await this.getChainModule(back);
+    const network: string = await this.getNetwork(back);
+    const host = Messages.getString("Input host: ");
+    const port = Messages.getString("Input port: ");
+    const { evm, peer } = chain;
 
     await this.check({
-        host,
-        port,
-        network,
-        evm,
-        peer
+      host,
+      port,
+      network,
+      evm,
+      peer,
     });
   }
 
@@ -75,7 +77,7 @@ export default class Check {
     }
   }
 
-  public  getChainModule(): any {
+  public  getChainModule(back: any): any {
     const chainMenuListNumber = Messages.renderMenuList({
       title: 'Choice chain: ',
       list: Chains,
@@ -83,14 +85,14 @@ export default class Check {
     const chainMenuListIndex = Number(chainMenuListNumber) - 1;
 
     if (chainMenuListIndex < 0 && chainMenuListIndex > Chains.length - 1) {
-      this.init();
+      this.initialize(back);
       return 0;
     }
 
     return Chains[chainMenuListIndex];
   }
 
-  public  getNetwork(): string {
+  public  getNetwork(back: any): string {
     const networkMenuListNumber: string = Messages.renderList({
       title: 'Choice network: ',
       list: Networks,
@@ -98,7 +100,7 @@ export default class Check {
     const chainMenuListIndex = Number(networkMenuListNumber) - 1;
 
     if (chainMenuListIndex < 0 && chainMenuListIndex > Networks.length - 1) {
-      this.init();
+      this.initialize(back);
       return '';
     }
 

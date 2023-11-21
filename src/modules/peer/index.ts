@@ -1,19 +1,37 @@
-import IMenu from '../../interfaces/menu';
-import Menu from '../../controllers/menu';
+import select from "@inquirer/select";
 import Check from "./check";
 
+enum Menu {
+  CONNECTION = "connection",
+  BACK = "back",
+}
 
-export default class Ducx extends Menu {
-  constructor() {
-    const menuList: IMenu[] = [
-      {
-        name: "Peer",
-        annotation: "Check peer connection",
-        module: new Check(),
-      }
-    ];
-    const menuListTitle: string = 'Peer module, input number: ';
+export default class Peer {
+  async initialize(back: any) {
+    const menuList = {
+      connection: new Check(),
+    };
 
-    super(menuList, menuListTitle);
+    const answer: Menu = await select({
+      message: "Select item: ",
+      choices: [
+        {
+          name: "Connection",
+          value: Menu.CONNECTION,
+          description: "* Check peer connection.",
+        },
+        {
+          name: "<<< Back",
+          value: Menu.BACK,
+        },
+      ],
+    });
+
+    if (answer === Menu.BACK) {
+      back();
+      return;
+    }
+
+    menuList[answer].initialize(() => this.initialize(back));
   }
 }

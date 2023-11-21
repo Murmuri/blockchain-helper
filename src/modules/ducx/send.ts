@@ -1,17 +1,19 @@
 import Messages from "../../controllers/messages";
 import Web3 from "web3";
+import { table } from "table";
 
 export default class Send {
   private provider: any;
   private web3: any;
 
-  public init() {
+  public initialize(back: any) {
     this.provider = new Web3.providers.HttpProvider(
       `http://212.24.108.89:8546`
     );
     this.web3 = new Web3(this.provider);
 
     this.sendEther();
+    back();
   }
 
   public async sendEther() {
@@ -38,9 +40,11 @@ export default class Send {
       const sendedTx = await this.web3.eth.sendSignedTransaction(
         rawTransaction as string
       );
-      Messages.answer('Sended tx: ');
-      Messages.answer(sendedTx);
-    } catch (e:any) {
+
+      const data = [["Sended tx", sendedTx]];
+
+      Messages.answer(table(data));
+    } catch (e: any) {
       Messages.error(e);
     }
   }
